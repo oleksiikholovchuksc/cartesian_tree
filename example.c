@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "cartesian_tree.h"
+#include "tree/cartesian_tree.h"
 
 int main(void) {
   char buf[10];
