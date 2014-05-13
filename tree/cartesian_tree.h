@@ -18,16 +18,15 @@
 #ifndef _CARTESIAN_TREE_H_
 #define _CARTESIAN_TREE_H_
 
-#define  NODE  struct Node
-#define pNODE  struct Node*
-#define ppNODE struct Node**
-
 /* Each node of the tree has the following structure: */
-struct Node {
+typedef struct Node {
   long key, priority;   /* priority is a kind of `technical' information */
   char* assoc;          /* pointer to a user's data (imagine MAP) */
-  NODE *left, *right;   /* links to the left and right child */
-};
+  struct Node *left, *right;   /* links to the left and right child */
+} NODE;
+
+typedef NODE*   pNODE;
+typedef NODE** ppNODE;
 
 /* Returns a pointer to the tree consisting only from the root */
 pNODE construct_tree(void);
