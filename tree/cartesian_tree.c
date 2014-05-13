@@ -14,10 +14,8 @@
 
 
 pNODE construct_tree(void) {
-  srand(time(0));   /* treap is a randomized data structure, remember? */
-
   pNODE root = (pNODE)malloc(sizeof(NODE));
-  root->key = root->priority = LONG_MIN;
+  root->key = root->priority = TKEY_T_MIN;
   root->assoc = NULL;
   root->left = root->right = NULL;
 
@@ -25,7 +23,7 @@ pNODE construct_tree(void) {
 }
 
 
-pNODE insert(pNODE root, long key, void* assoc, char* insertion_was) {
+pNODE insert(pNODE root, tkey_t key, void* assoc, char* insertion_was) {
   /* nope, Mr. Duplicate, we don't wanna see you at our party */
   pNODE search_res = find(root, key);
   if(search_res) {
@@ -45,6 +43,7 @@ pNODE insert(pNODE root, long key, void* assoc, char* insertion_was) {
     /* if we're at the bottom */
     if(!*T) {
       *T = fresh_node;
+      *insertion_was = 1;
       return fresh_node;
     }
 
@@ -81,7 +80,7 @@ pNODE insert(pNODE root, long key, void* assoc, char* insertion_was) {
 }
 
 
-void* erase(pNODE root, long key) {
+void* erase(pNODE root, tkey_t key, char* erased) {
   /* searching for the node */
   pNODE pos = root;
   ppNODE pred_link;
@@ -104,8 +103,10 @@ void* erase(pNODE root, long key) {
   }
   
   /* if there is no node with such key */
-  if(!pos)
+  if(!pos) {
+    *erased = 0;
     return NULL;
+  }
 
   pNODE to_free = pos;
   void* users_data = pos->assoc;
@@ -134,11 +135,12 @@ void* erase(pNODE root, long key) {
   /* sorry friend, we don't need you anymore */
   free(to_free);
 
+  *erased = 1;
   return users_data;
 }
 
 
-pNODE find(pNODE root, long key) {
+pNODE find(pNODE root, tkey_t key) {
   pNODE T = root;
 
   /* lookup like in ordinary BST */

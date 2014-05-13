@@ -8,7 +8,7 @@
 #include "tree/cartesian_tree.h"
 
 int main(void) {
-  char buf[10];
+  char flag, buf[10];
   pNODE T = construct_tree();
   long key;
 
@@ -19,7 +19,6 @@ int main(void) {
     scanf("%s %ld", buf, &key);
 
     if(!strcmp(buf, "add")) {
-      char flag;
       pNODE res = insert(T, key, NULL, &flag);
       assert(res->key == key);
       if(flag)
@@ -28,7 +27,8 @@ int main(void) {
 	puts("Ooops, a duplicate detected.");
     }
     else if(!strcmp(buf, "remove")) {
-      if(!erase(T, key))
+      erase(T, key, &flag);
+      if(flag)
 	puts("Found and erased, OK.");
       else
 	puts("No such element.");
