@@ -25,10 +25,13 @@ pNODE construct_tree(void) {
 }
 
 
-char insert(pNODE root, long key, void* assoc) {
+pNODE insert(pNODE root, long key, void* assoc, char* insertion_was) {
   /* nope, Mr. Duplicate, we don't wanna see you at our party */
-  if(find(root, key))
-    return -1;
+  pNODE search_res = find(root, key);
+  if(search_res) {
+    *insertion_was = 0;
+    return search_res;
+  }
 
   /* constructing a new node */
   pNODE fresh_node = (pNODE)malloc(sizeof(NODE));
@@ -42,7 +45,7 @@ char insert(pNODE root, long key, void* assoc) {
     /* if we're at the bottom */
     if(!*T) {
       *T = fresh_node;
-      return 0;
+      return fresh_node;
     }
 
     if((*T)->priority > fresh_node->priority)
@@ -73,11 +76,12 @@ char insert(pNODE root, long key, void* assoc) {
     }
   }
 
-  return 0;
+  *insertion_was = 1;
+  return fresh_node;
 }
 
 
-char erase(pNODE root, long key) {
+void* erase(pNODE root, long key) {
   /* searching for the node */
   pNODE pos = root;
   ppNODE pred_link;
@@ -101,9 +105,10 @@ char erase(pNODE root, long key) {
   
   /* if there is no node with such key */
   if(!pos)
-    return -1;
+    return NULL;
 
   pNODE to_free = pos;
+  void* users_data = pos->assoc;
 
   /* performing a `merge' operation */
   pNODE left_subt = pos->left;
@@ -129,7 +134,7 @@ char erase(pNODE root, long key) {
   /* sorry friend, we don't need you anymore */
   free(to_free);
 
-  return 0;
+  return users_data;
 }
 
 

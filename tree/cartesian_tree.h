@@ -32,22 +32,24 @@ typedef NODE** ppNODE;
 pNODE construct_tree(void);
 
 /* Inserts new element to the tree. 
-   Returns 0 if there was no such element in tree and -1 otherwise
-   (in such case, nothing is inserted) */
-char insert(pNODE, long, void*);
+   If there isn't no node with such a key, returns pointer
+   to newly inserted node and sets flag `insertion_was' to 0.
+   Otherwise, returns pointer to existing node with such key
+   and sets the flag to 1. */
+pNODE insert(pNODE root, long key, void* data, char* insertion_was);
 
 /* Erases a node with a particular key.
-   returns 0 if an element with key `key' was deleted 
-   and -1 otherwise. */
-char erase(pNODE, long);
+   Returns user's data stored in deleted node  if an element 
+   with key `key' was deleted and NULL otherwise. */
+void* erase(pNODE root, long key);
 
 /* Returns a pointer to node with the particular key
    or NULL if there is no such node. */
-pNODE find(pNODE, long);
+pNODE find(pNODE root, long key);
 
 /* Clean up. One should call this function every time 
    when the tree isn't needed no more. */
-void destruct_tree(pNODE);
+void destruct_tree(pNODE root);
 
 
 #endif
