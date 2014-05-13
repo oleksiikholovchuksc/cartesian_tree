@@ -25,7 +25,7 @@ pNODE construct_tree(void) {
 }
 
 
-char insert(pNODE root, long key, char* assoc) {
+char insert(pNODE root, long key, void* assoc) {
   /* nope, Mr. Duplicate, we don't wanna see you at our party */
   if(find(root, key))
     return -1;

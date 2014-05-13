@@ -21,7 +21,7 @@
 /* Each node of the tree has the following structure: */
 typedef struct Node {
   long key, priority;   /* priority is a kind of `technical' information */
-  char* assoc;          /* pointer to a user's data (imagine MAP) */
+  void* assoc;          /* pointer to a user's data (imagine MAP) */
   struct Node *left, *right;   /* links to the left and right child */
 } NODE;
 
@@ -34,7 +34,7 @@ pNODE construct_tree(void);
 /* Inserts new element to the tree. 
    Returns 0 if there was no such element in tree and -1 otherwise
    (in such case, nothing is inserted) */
-char insert(pNODE, long, char*);
+char insert(pNODE, long, void*);
 
 /* Erases a node with a particular key.
    returns 0 if an element with key `key' was deleted 
