@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "tree/cartesian_tree.h"
 
@@ -18,7 +19,10 @@ int main(void) {
     scanf("%s %ld", buf, &key);
 
     if(!strcmp(buf, "add")) {
-      if(!insert(T, key, NULL))
+      char flag;
+      pNODE res = insert(T, key, NULL, &flag);
+      assert(res->key == key);
+      if(flag)
 	puts("Inserted, OK.");
       else
 	puts("Ooops, a duplicate detected.");
