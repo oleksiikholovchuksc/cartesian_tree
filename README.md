@@ -16,4 +16,4 @@ cartesian_tree is an implementation of quasi-balanced BST called Cartesian Tree 
 
  *  Treap is a randomized data structure, so DON'T FORGET TO CALL srand() BEFORE YOU USE IT.
 
-![Pic](https://rawhttps://raw.githubusercontent.com/vortexxx192/cartesian_tree/master/tree_pic.png "Just a tree")
+![Pic](https://raw.githubusercontent.com/vortexxx192/cartesian_tree/master/tree_pic.png "Just a tree")
