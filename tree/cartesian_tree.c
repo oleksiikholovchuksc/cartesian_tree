@@ -35,10 +35,12 @@ pNODE insert(pNODE root, tkey_t key, void* assoc, char* insertion_was) {
   pNODE fresh_node = (pNODE)malloc(sizeof(NODE));
   fresh_node->key = key;
   fresh_node->priority = ((rand() << 15) | rand());
+  fresh_node->left = fresh_node->right = NULL;
   fresh_node->assoc = assoc;
 
   /* searching for the proper place for new node */
   ppNODE T = &(root->right);
+
   while(1) {
     /* if we're at the bottom */
     if(!*T) {
@@ -47,10 +49,10 @@ pNODE insert(pNODE root, tkey_t key, void* assoc, char* insertion_was) {
       return fresh_node;
     }
 
-    if((*T)->priority > fresh_node->priority)
+    if(fresh_node->priority < (*T)->priority)
       break;
 
-    /* choosing the right direction */
+    /* choosing correct direction */
     T = (fresh_node->key < (*T)->key) ? &((*T)->left) : &((*T)->right);
   }
 
@@ -62,6 +64,7 @@ pNODE insert(pNODE root, tkey_t key, void* assoc, char* insertion_was) {
      those smaller than `key', and those larger than `key' */
   ppNODE left_subt = &((*T)->left);
   ppNODE right_subt = &((*T)->right);
+  *right_subt = *left_subt = NULL;
 
   while(to_split) {
     if(to_split->key < key) {
